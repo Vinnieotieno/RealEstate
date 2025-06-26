@@ -43,9 +43,9 @@
     border: none;
     outline: none;
     position: relative;
-    z-index: 1100;
-    pointer-events: auto;
-    background: transparent;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+    background: #e0f7fa !important; /* TEMP: highlight for debug */
   }
   .vincent-navbar .navbar-toggler-icon {
     background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path stroke="rgba(32,134,107,0.8)" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg>');
@@ -283,34 +283,3 @@
     </div>
   </div>
 </nav>
-<!-- WhatsApp Chatbot Widget Modern -->
-<div class="whatsapp-chatbot-widget" id="whatsappChatbotWidget" style="position:relative;">
-  <button class="close-btn"
-          title="Close chat"
-          aria-label="Close WhatsApp chat"
-          style="position:absolute;top:12px;right:12px;z-index:9999;background:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 2px 8px rgba(32,134,107,0.10);border:none;opacity:0.85;cursor:pointer;"
-          onclick="document.getElementById('whatsappChatbotWidget').style.display='none';document.getElementById('whatsappChatbotBtnReopen').classList.add('show');">
-    &times;
-  </button>
-  <div class="whatsapp-chatbot-widget-header">
-    <span style="display:flex;align-items:center;gap:0.4rem;">
-      <span class="online-dot"></span>
-      <span class="brand">Vincent RealEstate is online</span>
-      <i class="fab fa-whatsapp" style="color:#25d366;font-size:1.3rem;margin-left:0.5rem;"></i>
-    </span>
-  </div>
-  <div class="whatsapp-chatbot-widget-message">
-    👋 Hi there! Welcome to Vincent RealEstate Solutions.<br>
-    How can we help you today? Click below to chat with us on WhatsApp.
-  </div>
-  <a href="https://wa.me/254797398004" target="_blank" class="whatsapp-chatbot-widget-btn">Chat on WhatsApp</a>
-  <div class="whatsapp-chatbot-widget-tail">
-    <svg width="38" height="18" viewBox="0 0 38 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0C0 0 8 18 19 18C30 18 38 0 38 0H0Z" fill="white"/>
-      <path d="M0 0C0 0 8 18 19 18C30 18 38 0 38 0" stroke="#25d366" stroke-width="1.5"/>
-    </svg>
-  </div>
-</div>
-<button class="whatsapp-chatbot-btn-reopen" id="whatsappChatbotBtnReopen" onclick="document.getElementById('whatsappChatbotWidget').style.display='flex';this.classList.remove('show');" title="Chat with us on WhatsApp">
-  <i class="fab fa-whatsapp"></i>
-</button>

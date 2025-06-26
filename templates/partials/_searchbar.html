@@ -123,12 +123,12 @@
       <div class="col-md-3 col-12 form-group">
         <label class="form-label" for="keywords">Keywords</label>
         <span class="input-icon"><i class="fas fa-search"></i></span>
-        <input type="text" id="keywords" name="keywords" class="form-control" placeholder="e.g. Pool, Garage, Penthouse">
+        <input type="text" id="keywords" name="keywords" class="form-control" placeholder="e.g. Pool, Garage, Penthouse" value="{{ request.GET.keywords }}">
       </div>
       <div class="col-md-3 col-12 form-group">
         <label class="form-label" for="city">City/Town</label>
         <span class="input-icon"><i class="fas fa-city"></i></span>
-        <input type="text" id="city" name="city" class="form-control" placeholder="e.g. Nairobi, Mombasa, London, New York">
+        <input type="text" id="city" name="city" class="form-control" placeholder="e.g. Nairobi, Mombasa, London, New York" value="{{ request.GET.city }}">
       </div>
       <div class="col-md-2 col-6 form-group">
         <label class="form-label" for="bedrooms">Bedrooms</label>
@@ -136,7 +136,7 @@
         <select id="bedrooms" name="bedrooms" class="form-select">
           <option value="">Any</option>
           {% for key, value in bedroom_choices.items %}
-          <option value="{{ key }}">{{ value }}</option>
+          <option value="{{ key }}" {% if request.GET.bedrooms == key|stringformat:'s' %}selected{% endif %}>{{ value }}</option>
           {% endfor %}
         </select>
       </div>
@@ -146,7 +146,7 @@
         <select id="price" name="price" class="form-select">
           <option value="">Any</option>
           {% for key, value in price_choices.items %}
-          <option value="{{ key }}">Ksh {{ value }}</option>
+          <option value="{{ key }}" {% if request.GET.price == key|stringformat:'s' %}selected{% endif %}>Ksh {{ value }}</option>
           {% endfor %}
         </select>
       </div>
