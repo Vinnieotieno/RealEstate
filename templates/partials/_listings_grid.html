@@ -111,6 +111,14 @@
     color: #fff;
     border: 2px solid #20866b;
   }
+  .vincent-listing-price {
+    color: #1fc8db;
+    font-size: 1.18rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
   @media (max-width: 600px) {
     .vincent-listings-grid {
       grid-template-columns: 1fr;
@@ -153,7 +161,7 @@
           <div>
             <div class="vincent-listing-title">{{ listing.title }}</div>
             <div class="vincent-listing-meta"><i class="fas fa-map-marker-alt"></i> {{ listing.city }}, {{ listing.state }}</div>
-            <div class="vincent-listing-meta">Ksh {{ listing.price|intcomma }}</div>
+            <div class="vincent-listing-meta vincent-listing-price">Ksh {{ listing.price|intcomma }}</div>
             <div class="vincent-listing-meta">
               <i class="fas fa-bed"></i> {{ listing.bedrooms }} &nbsp;
               <i class="fas fa-bath"></i> {{ listing.bathrooms }} &nbsp;
@@ -171,4 +179,39 @@
   {% else %}
     <div class="col-12 text-center">No Listings Available</div>
   {% endif %}
-</div> 
+</div>
+{% if listings.has_other_pages %}
+  <nav aria-label="Listings pagination" class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if listings.has_previous %}
+        <li class="page-item">
+          <a class="page-link rounded-pill" href="?page={{ listings.previous_page_number }}" aria-label="Previous">&laquo;</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link rounded-pill">&laquo;</span>
+        </li>
+      {% endif %}
+      {% for i in listings.paginator.page_range %}
+        {% if listings.number == i %}
+          <li class="page-item active">
+            <span class="page-link rounded-pill">{{ i }}</span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link rounded-pill" href="?page={{ i }}">{{ i }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+      {% if listings.has_next %}
+        <li class="page-item">
+          <a class="page-link rounded-pill" href="?page={{ listings.next_page_number }}" aria-label="Next">&raquo;</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link rounded-pill">&raquo;</span>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %} 

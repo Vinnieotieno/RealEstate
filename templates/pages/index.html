@@ -2,7 +2,15 @@
 {% load static %}
 {% load humanize %}
 
-{% block title %} | Welcome {% endblock %}
+{% block title %} | Welcome to Vincent RealEstate Solutions - Find Your Dream Home {% endblock %}
+{% block meta %}
+  <meta name="description" content="Find your next home, rental, or investment property with Vincent RealEstate Solutions. Trusted agents, verified listings, and a seamless experience across Kenya and worldwide.">
+  <meta property="og:title" content="Vincent RealEstate Solutions - Find Your Dream Home" />
+  <meta property="og:description" content="Discover premium real estate listings, rentals, and investment opportunities in Kenya and globally. Modern, sleek, and trusted." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:image" content="https://yourdomain.com/static/img/showcase.avif" />
+{% endblock %}
 
 {% block content %}
   {% include 'partials/_hero.html' %}
