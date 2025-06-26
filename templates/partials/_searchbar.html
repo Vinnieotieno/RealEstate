@@ -64,12 +64,30 @@
     border: none;
     box-shadow: 0 2px 16px rgba(32,134,107,0.13);
     transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    width: 100%;
+    min-width: 120px;
+    margin-left: 0;
+    margin-right: 0;
+    display: block;
   }
   .vincent-searchbar .btn:hover {
     background: linear-gradient(90deg, #1fc8db 0%, #20866b 100%);
     color: #fff;
     transform: translateY(-2px) scale(1.03);
     box-shadow: 0 6px 24px rgba(32,134,107,0.18);
+  }
+  @media (max-width: 1200px) {
+    .vincent-searchbar .col-md-2, .vincent-searchbar .col-md-3 {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+    }
+    .vincent-searchbar .col-md-2.col-12, .vincent-searchbar .col-md-3.col-12 {
+      margin-bottom: 1rem;
+    }
+    .vincent-searchbar .btn {
+      margin-top: 0.5rem;
+    }
   }
   @media (max-width: 900px) {
     .vincent-searchbar {
@@ -92,23 +110,26 @@
     .vincent-searchbar .form-label {
       font-size: 0.95rem;
     }
+    .vincent-searchbar .btn {
+      margin-top: 0.7rem;
+    }
   }
 </style>
 <div class="vincent-searchbar shadow-lg">
   <form action="{% url 'search' %}" method="get">
-    <div class="row g-4 align-items-end">
+    <div class="row g-4 align-items-end flex-nowrap" style="overflow-x:auto;">
       <div class="col-md-3 col-12 form-group">
-        <label class="form-label" for="keywords"><i class="fas fa-search"></i> Keywords</label>
+        <label class="form-label" for="keywords">Keywords</label>
         <span class="input-icon"><i class="fas fa-search"></i></span>
         <input type="text" id="keywords" name="keywords" class="form-control" placeholder="e.g. Pool, Garage, Penthouse">
       </div>
       <div class="col-md-3 col-12 form-group">
-        <label class="form-label" for="city"><i class="fas fa-city"></i> City/Town</label>
+        <label class="form-label" for="city">City/Town</label>
         <span class="input-icon"><i class="fas fa-city"></i></span>
         <input type="text" id="city" name="city" class="form-control" placeholder="e.g. Nairobi, Mombasa, London, New York">
       </div>
       <div class="col-md-2 col-6 form-group">
-        <label class="form-label" for="bedrooms"><i class="fas fa-bed"></i> Bedrooms</label>
+        <label class="form-label" for="bedrooms">Bedrooms</label>
         <span class="input-icon"><i class="fas fa-bed"></i></span>
         <select id="bedrooms" name="bedrooms" class="form-select">
           <option value="">Any</option>
@@ -118,16 +139,16 @@
         </select>
       </div>
       <div class="col-md-2 col-6 form-group">
-        <label class="form-label" for="price"><i class="fas fa-money-bill-wave"></i> Max Price</label>
+        <label class="form-label" for="price">Max Price</label>
         <span class="input-icon"><i class="fas fa-money-bill-wave"></i></span>
         <select id="price" name="price" class="form-select">
           <option value="">Any</option>
           {% for key, value in price_choices.items %}
-          <option value="{{ key }}">{{ value }}</option>
+          <option value="{{ key }}">Ksh {{ value }}</option>
           {% endfor %}
         </select>
       </div>
-      <div class="col-md-2 col-12 d-grid align-items-end">
+      <div class="col-md-2 col-12 d-grid align-items-end" style="min-width:140px;">
         <button class="btn" type="submit">Search</button>
       </div>
     </div>
