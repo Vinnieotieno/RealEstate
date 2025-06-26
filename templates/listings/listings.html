@@ -2,18 +2,63 @@
 
 {% load humanize %}
 
-{% block title %} | Browse Property Listings {% endblock %}
+{% block title %} | Featured Property Listings | Vincent RealEstate Solutions {% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Browse featured property listings on Vincent RealEstate Solutions. Find your next home, rental, or investment property in Kenya and worldwide.">
+  <meta property="og:title" content="Featured Listings - Vincent RealEstate Solutions" />
+  <meta property="og:description" content="Discover premium real estate listings, rentals, and investment opportunities in Kenya and globally. Modern, sleek, and trusted." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/listings/" />
+{% endblock %}
 
 {% block content %}
-<section id="showcase-inner" class="py-5 text-white" style="background: linear-gradient(90deg, #20866b 0%, #0f4033 100%); font-family:'Poppins',sans-serif;">
-    <div class="container">
-      <div class="text-center row">
-        <div class="col-md-12">
-          <h1 class="display-4" style="font-weight:700;">Featured Listings</h1>
-          <p class="lead">Discover the best properties with Vincent RealEstate Solutions.</p>
-        </div>
-      </div>
-    </div>
+<!-- Modern Search/Filter Bar (now directly under navbar) -->
+{% include 'partials/_searchbar.html' %}
+
+<style>
+  .featured-hero {
+    min-height: 32vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(90deg, #20866b 0%, #1fc8db 100%);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+  .featured-hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    border-radius: 32px;
+    background: rgba(255,255,255,0.10);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+    backdrop-filter: blur(8px);
+  }
+  .featured-hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 0.7rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .featured-hero-content p {
+    font-size: 1.15rem;
+    color: #e4e4e4;
+    margin-bottom: 0;
+  }
+</style>
+<section class="featured-hero">
+  <div class="featured-hero-content">
+    <h1>Featured Listings</h1>
+    <p>Discover the best properties with Vincent RealEstate Solutions. Search, filter, and find your dream home or investment.</p>
+  </div>
 </section>
 
 <!-- Breadcrumb -->
@@ -30,45 +75,6 @@
     </nav>
   </div>
 </section>
-
-<!-- Filter Bar -->
-<div class="container mb-4" style="font-family:'Poppins',sans-serif;">
-  <form method="get" class="row g-2 align-items-center p-3 shadow-sm rounded" style="background:#fff;">
-    <div class="col-md-3 mb-2 mb-md-0">
-      <input type="text" name="keywords" class="form-control rounded-pill" placeholder="Keyword (Pool, Garage, etc)" value="{{ request.GET.keywords }}">
-    </div>
-    <div class="col-md-2 mb-2 mb-md-0">
-      <input type="text" name="city" class="form-control rounded-pill" placeholder="City" value="{{ request.GET.city }}">
-    </div>
-    <div class="col-md-2 mb-2 mb-md-0">
-      <select name="state" class="form-select rounded-pill">
-        <option value="">State (All)</option>
-        {% for key, value in state_choices.items %}
-        <option value="{{ key }}" {% if request.GET.state == key %}selected{% endif %}>{{ value }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-2 mb-2 mb-md-0">
-      <select name="bedrooms" class="form-select rounded-pill">
-        <option value="">Bedrooms (All)</option>
-        {% for key, value in bedroom_choices.items %}
-        <option value="{{ key }}" {% if request.GET.bedrooms == key %}selected{% endif %}>{{ value }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-2 mb-2 mb-md-0">
-      <select name="price" class="form-select rounded-pill">
-        <option value="">Max Price (Any)</option>
-        {% for key, value in price_choices.items %}
-        <option value="{{ key }}" {% if request.GET.price == key %}selected{% endif %}>{{ value }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-1 d-grid">
-      <button class="btn btn-success rounded-pill px-3" type="submit" style="font-weight:600;">Filter</button>
-    </div>
-  </form>
-</div>
 
 <!-- Listings Grid -->
 <div class="container">
