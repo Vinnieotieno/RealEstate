@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content %}
+  {% include 'partials/_hero.html' %}
+  {% include 'partials/_searchbar.html' %}
+  {% include 'partials/_alerts.html' %}
+  <section class="container">
+    <h3 class="mb-3 text-center" style="font-family:'Poppins',sans-serif;font-weight:700;">Latest Listings</h3>
+    {% include 'partials/_listings_grid.html' %}
+  </section>
+  {% include 'partials/_services.html' %}
+{% endblock %}
