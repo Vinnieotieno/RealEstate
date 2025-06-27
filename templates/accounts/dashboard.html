@@ -1,69 +1,262 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} | User Dashboard {% endblock %}
 
 {% block content %}
-<section id="showcase-inner" class="py-5 text-white">
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-12">
-          <h1 class="display-4">User Dashboard</h1>
-          <p class="lead">Manage your BT Real Estate account</p>
-        </div>
+<style>
+  .dashboard-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 3rem 0;
+    color: white;
+  }
+  .dashboard-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: none;
+  }
+  .dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+  .inquiry-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #667eea;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .inquiry-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+  .inquiry-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .inquiry-title {
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+  .inquiry-date {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  .inquiry-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .detail-label {
+    font-weight: 600;
+    color: #555;
+    min-width: 80px;
+  }
+  .detail-value {
+    color: #333;
+  }
+  .btn-view-listing {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+  .btn-view-listing:hover {
+    transform: translateY(-1px);
+    color: white;
+    text-decoration: none;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+  }
+  .empty-state i {
+    font-size: 4rem;
+    color: #ddd;
+    margin-bottom: 1rem;
+  }
+  .breadcrumb-custom {
+    background: transparent;
+    padding: 1rem 0;
+  }
+  .breadcrumb-custom .breadcrumb-item a {
+    color: #667eea;
+    text-decoration: none;
+  }
+  .breadcrumb-custom .breadcrumb-item.active {
+    color: #666;
+  }
+</style>
+
+<div class="dashboard-hero">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4">Welcome back, {{ user.first_name }}!</h1>
+        <p class="lead">Manage your property inquiries and stay updated with your real estate journey</p>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- Breadcrumb -->
-  <section id="bc" class="mt-3">
-    <div class="container">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'index' %}">
-              <i class="fas fa-home"></i> Home</a>
-          </li>
-          <li class="breadcrumb-item active"> Dashboard</li>
-        </ol>
-      </nav>
+<!-- Breadcrumb -->
+<section class="breadcrumb-custom">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}">
+            <i class="fas fa-home"></i> Home</a>
+        </li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+<section class="py-4">
+  <div class="container">
+    <!-- Dashboard Stats -->
+    <div class="dashboard-stats">
+      <div class="stat-card">
+        <div class="stat-number">{{ contacts.count }}</div>
+        <div class="stat-label">Total Inquiries</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ user.date_joined|date:"M Y" }}</div>
+        <div class="stat-label">Member Since</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ user.email|truncatechars:15 }}</div>
+        <div class="stat-label">Email</div>
+      </div>
     </div>
-  </section>
 
-  <!-- Alerts -->
-  {% include 'partials/_alerts.html' %}
+    <!-- Inquiries Section -->
+    <div class="dashboard-card">
+      <h3 class="mb-4">
+        <i class="fas fa-search"></i> Your Property Inquiries
+      </h3>
+      
+      {% if contacts %}
+        <p class="text-muted mb-4">Here are all the properties you've inquired about:</p>
+        
+        {% for contact in contacts %}
+          <div class="inquiry-card">
+            <div class="inquiry-header">
+              <h5 class="inquiry-title">{{ contact.listing }}</h5>
+              <span class="inquiry-date">
+                <i class="far fa-calendar-alt"></i> {{ contact.contact_date|date:"M d, Y" }}
+              </span>
+            </div>
+            
+            <div class="inquiry-details">
+              <div class="detail-item">
+                <span class="detail-label">Property ID:</span>
+                <span class="detail-value">#{{ contact.listing_id }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Your Name:</span>
+                <span class="detail-value">{{ contact.name }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Your Email:</span>
+                <span class="detail-value">{{ contact.email }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Your Phone:</span>
+                <span class="detail-value">{{ contact.phone }}</span>
+              </div>
+            </div>
+            
+            {% if contact.message %}
+              <div class="mb-3">
+                <strong>Your Message:</strong>
+                <p class="mt-2 mb-0" style="color: #666; font-style: italic;">"{{ contact.message }}"</p>
+              </div>
+            {% endif %}
+            
+            <div class="text-end">
+              <a href="{% url 'listing' contact.listing_id %}" class="btn-view-listing">
+                <i class="fas fa-eye"></i> View Property
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-search"></i>
+          <h4>No Inquiries Yet</h4>
+          <p>You haven't made any property inquiries yet. Start exploring our listings!</p>
+          <a href="{% url 'listings' %}" class="btn-view-listing">
+            <i class="fas fa-home"></i> Browse Properties
+          </a>
+        </div>
+      {% endif %}
+    </div>
 
-  <section id="dashboard" class="py-4">
-    <div class="container">
+    <!-- Quick Actions -->
+    <div class="dashboard-card">
+      <h3 class="mb-4">
+        <i class="fas fa-bolt"></i> Quick Actions
+      </h3>
       <div class="row">
-        <div class="col-md-12">
-          <h2>Welcome {{ user.first_name }}</h2>
-          {% if contacts %}
-            <p>Here are the property listings that you have inquired about</p>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Property</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for contact in contacts %}
-                  <tr>
-                    <td>{{ contact.id }}</td>
-                    <td>{{ contact.listing }}</td>
-                    <td>
-                      <a class="btn btn-light" href="{% url 'listing' contact.listing_id %}">View Listing</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          {% else %}
-            <p>You have not made any inquiries</p>
-          {% endif %}
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'listings' %}" class="btn btn-outline-primary w-100">
+            <i class="fas fa-search"></i> Browse Properties
+          </a>
+        </div>
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'contact' %}" class="btn btn-outline-success w-100">
+            <i class="fas fa-envelope"></i> Contact Us
+          </a>
+        </div>
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'index' %}" class="btn btn-outline-info w-100">
+            <i class="fas fa-home"></i> Go Home
+          </a>
         </div>
       </div>
     </div>
-  </section>
-  {% endblock %}
+  </div>
+</section>
+{% endblock %} 

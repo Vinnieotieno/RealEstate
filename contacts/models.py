@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from datetime import datetime
 
 class Contact(models.Model):
@@ -9,6 +10,14 @@ class Contact(models.Model):
   phone = models.CharField(max_length=100)
   message = models.TextField(blank=True)
   contact_date = models.DateTimeField(default=datetime.now, blank=True)
-  user_id = models.IntegerField(blank=True)
+  
+  # Add foreign key relationships for better admin functionality
+  user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='contacts')
+  
   def __str__(self):
-    return self.name
+    return f"{self.name} - {self.listing}"
+    
+  class Meta:
+    ordering = ['-contact_date']
+    verbose_name = 'Contact Inquiry'
+    verbose_name_plural = 'Contact Inquiries'

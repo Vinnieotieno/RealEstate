@@ -57,13 +57,13 @@ def login(request):
     return render(request, 'accounts/login.html')
 
 def logout(request):
-  if request.method == 'POST':
+  if request.method == 'POST' or request.method == 'GET':
     auth.logout(request)
     messages.success(request, 'You are now logged out')
     return redirect('index')
 
 def dashboard(request):
-  user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+  user_contacts = Contact.objects.order_by('-contact_date').filter(user=request.user)
 
   context = {
     'contacts': user_contacts

@@ -11,7 +11,6 @@ def contact(request):
     email = request.POST.get('email', '')
     phone = request.POST.get('phone', '')
     message = request.POST.get('message', '')
-    user_id = request.POST.get('user_id', '')
     realtor_email = request.POST.get('realtor_email', '')
 
     # Convert listing_id to int if possible, else set to 0
@@ -19,16 +18,10 @@ def contact(request):
       listing_id_int = int(listing_id) if listing_id else 0
     except ValueError:
       listing_id_int = 0
-    # Convert user_id to int if possible, else set to 0
-    try:
-      user_id_int = int(user_id) if user_id else 0
-    except ValueError:
-      user_id_int = 0
 
     #  Check if user has made inquiry already (only for property inquiries)
     if listing_id_int and request.user.is_authenticated:
-      user_id_int = request.user.id
-      has_contacted = Contact.objects.all().filter(listing_id=listing_id_int, user_id=user_id_int)
+      has_contacted = Contact.objects.all().filter(listing_id=listing_id_int, user=request.user)
       if has_contacted:
         messages.error(request, 'You have already made an inquiry for this listing')
         return redirect('/listings/'+str(listing_id_int))
@@ -40,7 +33,7 @@ def contact(request):
       email=email,
       phone=phone,
       message=message,
-      user_id=user_id_int
+      user=request.user if request.user.is_authenticated else None
     )
     contact.save()
 
