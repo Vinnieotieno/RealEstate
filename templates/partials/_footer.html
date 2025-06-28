@@ -1,226 +1,102 @@
 {% load static %}
-<style>
-  .vincent-footer {
-    background: linear-gradient(90deg, #20866b 0%, #1fc8db 100%);
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    padding: 2.5rem 0 1.2rem 0;
-    border-top-left-radius: 2.2rem;
-    border-top-right-radius: 2.2rem;
-    box-shadow: 0 -4px 24px rgba(32,134,107,0.10);
-    margin-top: 3rem;
-  }
-  .vincent-footer .footer-brand {
-    font-weight: 800;
-    font-size: 1.35rem;
-    letter-spacing: -1px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    justify-content: center;
-  }
-  .vincent-footer .footer-brand img {
-    height: 32px;
-    width: 32px;
-    object-fit: contain;
-    margin-right: 0.5rem;
-  }
-  .vincent-footer .footer-links {
-    margin-bottom: 1.2rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.7rem;
-  }
-  .vincent-footer .footer-links a {
-    color: #fff;
-    font-weight: 600;
-    text-decoration: underline;
-    opacity: 0.85;
-    transition: color 0.2s, opacity 0.2s;
-    font-size: 1.05rem;
-  }
-  .vincent-footer .footer-links a:hover {
-    color: #1fc8db;
-    opacity: 1;
-  }
-  .vincent-footer .footer-contact {
-    margin-bottom: 1.2rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-    font-size: 1.08rem;
-  }
-  .vincent-footer .footer-contact a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: color 0.2s;
-  }
-  .vincent-footer .footer-contact a:hover {
-    color: #1fc8db;
-  }
-  .vincent-footer .footer-contact i {
-    font-size: 1.15rem;
-    margin-right: 0.2rem;
-  }
-  .vincent-footer .footer-social {
-    margin-bottom: 1.2rem;
-  }
-  .vincent-footer .footer-social a {
-    color: #fff;
-    font-size: 1.5rem;
-    margin: 0 0.7rem 0 0;
-    opacity: 0.85;
-    transition: color 0.2s, opacity 0.2s;
-    display: inline-block;
-  }
-  .vincent-footer .footer-social a:hover {
-    color: #25d366;
-    opacity: 1;
-  }
-  .vincent-footer .footer-copyright {
-    font-size: 0.98rem;
-    opacity: 0.85;
-    margin-top: 1.2rem;
-  }
-  @media (max-width: 600px) {
-    .vincent-footer {
-      padding: 1.2rem 0 0.7rem 0;
-      border-top-left-radius: 1.2rem;
-      border-top-right-radius: 1.2rem;
-    }
-    .vincent-footer .footer-brand {
-      font-size: 1.1rem;
-    }
-    .vincent-footer .footer-links a {
-      font-size: 0.98rem;
-    }
-    .vincent-footer .footer-social a {
-      font-size: 1.2rem;
-      margin: 0 0.5rem 0 0;
-    }
-    .vincent-footer .footer-contact {
-      flex-direction: column;
-      gap: 0.7rem;
-      font-size: 1rem;
-    }
-  }
-  /* WhatsApp Chatbot Widget */
-  .whatsapp-chatbot-widget {
-    position: fixed;
-    bottom: 110px;
-    right: 32px;
-    z-index: 3000;
-    background: #fff;
-    color: #20866b;
-    border-radius: 1.5rem 1.5rem 1.5rem 0.5rem;
-    box-shadow: 0 8px 32px rgba(32,134,107,0.18);
-    width: 320px;
-    max-width: 95vw;
-    padding: 1.2rem 1.2rem 1rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    animation: fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000);
-  }
-  .whatsapp-chatbot-widget-header {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    margin-bottom: 0.7rem;
-  }
-  .whatsapp-chatbot-widget-header .online-dot {
-    width: 10px;
-    height: 10px;
-    background: #25d366;
-    border-radius: 50%;
-    margin-right: 0.3rem;
-    display: inline-block;
-  }
-  .whatsapp-chatbot-widget-header .brand {
-    font-weight: 700;
-    color: #20866b;
-    font-size: 1.08rem;
-  }
-  .whatsapp-chatbot-widget-message {
-    font-size: 1.05rem;
-    color: #20866b;
-    margin-bottom: 1.1rem;
-    line-height: 1.5;
-  }
-  .whatsapp-chatbot-widget-btn {
-    background: linear-gradient(90deg, #25d366 0%, #128c7e 100%);
-    color: #fff;
-    border-radius: 2em;
-    font-weight: 700;
-    font-size: 1.08rem;
-    padding: 0.7em 2em;
-    border: none;
-    box-shadow: 0 2px 12px rgba(32,134,107,0.10);
-    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
-  .whatsapp-chatbot-widget-btn:hover {
-    background: linear-gradient(90deg, #128c7e 0%, #25d366 100%);
-    color: #fff;
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 6px 24px rgba(32,134,107,0.18);
-  }
-  @media (max-width: 600px) {
-    .whatsapp-chatbot-widget {
-      right: 10px;
-      bottom: 90px;
-      width: 98vw;
-      padding: 0.7rem 0.7rem 0.7rem 0.7rem;
-    }
-  }
-</style>
-<footer class="vincent-footer">
-  <div class="container text-center">
-    <div class="footer-brand">
-      <img src="{% static 'img/logo.png' %}" alt="Vincent RealEstate Logo">
-      Vincent <span style="color:#1fc8db;">RealEstate</span>
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+
+<footer class="vincent-footer" role="contentinfo" aria-label="Vincent RealEstate Solutions Footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand Section -->
+      <div class="footer-brand-section">
+        <div class="footer-brand">
+          <img src="{% static 'img/logo.png' %}" alt="Vincent RealEstate Solutions Logo" loading="lazy">
+          <span class="footer-brand-text">Vincent RealEstate</span>
+        </div>
+        <p class="footer-description">
+          Your trusted partner in finding the perfect property. We specialize in premium real estate solutions across Kenya, offering exceptional service and unmatched expertise.
+        </p>
+        <div class="footer-contact-info">
+          <div class="footer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:+254797398004" title="Call us at +254 797 398004">+254 797 398004</a>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:vincentotienoakuku@gmail.com" title="Email us">vincentotienoakuku@gmail.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Nairobi, Kenya</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links-list">
+          <li><a href="/" title="Home"><i class="fas fa-chevron-right"></i>Home</a></li>
+          <li><a href="{% url 'listings' %}" title="Browse Properties"><i class="fas fa-chevron-right"></i>Properties</a></li>
+          <li><a href="{% url 'about' %}" title="About Us"><i class="fas fa-chevron-right"></i>About Us</a></li>
+          <li><a href="{% url 'contact' %}" title="Contact Us"><i class="fas fa-chevron-right"></i>Contact</a></li>
+          <li><a href="{% url 'search' %}" title="Search Properties"><i class="fas fa-chevron-right"></i>Search</a></li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="footer-links-section">
+        <h4>Our Services</h4>
+        <ul class="footer-links-list">
+          <li><a href="#" title="Property Sales"><i class="fas fa-home"></i>Property Sales</a></li>
+          <li><a href="#" title="Property Rentals"><i class="fas fa-key"></i>Property Rentals</a></li>
+          <li><a href="#" title="Property Management"><i class="fas fa-tools"></i>Property Management</a></li>
+          <li><a href="#" title="Investment Advisory"><i class="fas fa-chart-line"></i>Investment Advisory</a></li>
+          <li><a href="#" title="Legal Services"><i class="fas fa-gavel"></i>Legal Services</a></li>
+        </ul>
+      </div>
+
+      <!-- Social & Newsletter -->
+      <div class="footer-social-section">
+        <h4>Connect With Us</h4>
+        <div class="footer-social-links">
+          <a href="https://wa.me/254797398004" class="footer-social-link" target="_blank" rel="noopener" title="Chat on WhatsApp" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener" title="Follow us on Facebook" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener" title="Follow us on Twitter" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener" title="Follow us on Instagram" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener" title="Connect on LinkedIn" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+        
+        <div class="footer-newsletter">
+          <h5>Stay Updated</h5>
+          <form class="newsletter-form" action="#" method="POST" role="form" aria-label="Newsletter subscription">
+            <input type="email" class="newsletter-input" placeholder="Enter your email" required aria-label="Email address">
+            <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="{% url 'listings' %}">Listings</a>
-      <a href="{% url 'about' %}">About</a>
-      <a href="{% url 'contact' %}">Contact</a>
-    </div>
-    <div class="footer-contact">
-      <a href="tel:+254797398004"><i class="fas fa-phone-alt"></i> +254 797 398004</a>
-      <a href="mailto:info@vincentrealestate.co.ke"><i class="fas fa-envelope"></i> info@vincentrealestate.co.ke</a>
-    </div>
-    <div class="footer-social">
-      <a href="https://wa.me/254797398004" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-    </div>
-    <div class="footer-copyright">
-      &copy; {{ now|date:'Y' }} Vincent RealEstate Solutions. All rights reserved.
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        &copy; {{ now|date:'Y' }} Vincent RealEstate Solutions. All rights reserved.
+      </div>
+      <div class="footer-bottom-links">
+        <a href="#" title="Privacy Policy">Privacy Policy</a>
+        <a href="#" title="Terms of Service">Terms of Service</a>
+        <a href="#" title="Cookie Policy">Cookie Policy</a>
+        <a href="#" title="Sitemap">Sitemap</a>
+      </div>
     </div>
   </div>
 </footer>
-<!-- WhatsApp Chatbot Widget 
-<div class="whatsapp-chatbot-widget" id="whatsappChatbotWidget">
-  <div class="whatsapp-chatbot-widget-header">
-    <span class="online-dot"></span>
-    <span class="brand">Vincent RealEstate is online</span>
-    <i class="fab fa-whatsapp" style="color:#25d366;font-size:1.3rem;margin-left:0.5rem;"></i>
-  </div>
-  <div class="whatsapp-chatbot-widget-message">
-    👋 Hi there! Welcome to Vincent RealEstate Solutions.<br>
-    How can we help you today? Click below to chat with us on WhatsApp.
-  </div>
-  <a href="https://wa.me/254797398004" target="_blank" class="whatsapp-chatbot-widget-btn">Chat on WhatsApp</a>
-</div>  -->

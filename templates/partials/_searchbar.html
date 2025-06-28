@@ -1,157 +1,78 @@
 {% load static %}
-<style>
-  .vincent-searchbar {
-    background: rgba(255,255,255,0.72);
-    border-radius: 2.5rem;
-    box-shadow: 0 8px 40px 0 rgba(32,134,107,0.13);
-    padding: 2.8rem 2.2rem 2.2rem 2.2rem;
-    margin-top: 5.5rem;
-    margin-bottom: 3.5rem;
-    max-width: 1050px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    z-index: 10;
-    font-family: 'Poppins', sans-serif;
-    backdrop-filter: blur(16px) saturate(140%);
-    border: 1.5px solid rgba(32,134,107,0.10);
-    transition: box-shadow 0.2s;
-  }
-  .vincent-searchbar .form-group {
-    position: relative;
-    margin-bottom: 0;
-  }
-  .vincent-searchbar .form-control, .vincent-searchbar .form-select {
-    border-radius: 2.2rem;
-    padding-left: 2.8rem;
-    font-size: 1.15rem;
-    background: rgba(255,255,255,0.96);
-    border: 1.5px solid #e4e4e4;
-    box-shadow: 0 2px 8px rgba(32,134,107,0.04);
-    height: 3.2rem;
-    margin-bottom: 0;
-    transition: border 0.2s;
-  }
-  .vincent-searchbar .form-control:focus, .vincent-searchbar .form-select:focus {
-    border: 1.5px solid #20866b;
-    box-shadow: 0 2px 12px rgba(32,134,107,0.10);
-  }
-  .vincent-searchbar .input-icon {
-    position: absolute;
-    left: 1.1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #20866b;
-    font-size: 1.25rem;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .vincent-searchbar .form-label {
-    font-size: 1.05rem;
-    color: #20866b;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-    margin-left: 0.5rem;
-    letter-spacing: 0.2px;
-  }
-  .vincent-searchbar .btn {
-    font-weight: 700;
-    font-size: 1.18rem;
-    border-radius: 2rem;
-    padding: 0.9rem 2.5rem;
-    background: linear-gradient(90deg, #20866b 0%, #1fc8db 100%);
-    color: #fff;
-    border: none;
-    box-shadow: 0 2px 16px rgba(32,134,107,0.13);
-    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-    width: 100%;
-    min-width: 120px;
-    margin-left: 0;
-    margin-right: 0;
-    display: block;
-  }
-  .vincent-searchbar .btn:hover {
-    background: linear-gradient(90deg, #1fc8db 0%, #20866b 100%);
-    color: #fff;
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 6px 24px rgba(32,134,107,0.18);
-  }
-  @media (max-width: 1200px) {
-    .vincent-searchbar .col-md-2, .vincent-searchbar .col-md-3 {
-      flex: 0 0 100%;
-      max-width: 100%;
-      margin-bottom: 1rem;
-    }
-    .vincent-searchbar .col-md-2.col-12, .vincent-searchbar .col-md-3.col-12 {
-      margin-bottom: 1rem;
-    }
-    .vincent-searchbar .btn {
-      margin-top: 0.5rem;
-    }
-  }
-  @media (max-width: 900px) {
-    .vincent-searchbar {
-      padding: 1.2rem 0.5rem 1.2rem 0.5rem;
-      margin-top: 4.5rem;
-    }
-    .vincent-searchbar .form-control, .vincent-searchbar .form-select {
-      font-size: 1rem;
-      height: 2.6rem;
-    }
-    .vincent-searchbar .btn {
-      font-size: 1rem;
-      padding: 0.7rem 1.5rem;
-    }
-  }
-  @media (max-width: 600px) {
-    .vincent-searchbar {
-      padding: 0.7rem 0.2rem 0.7rem 0.2rem;
-      margin-bottom: 2rem;
-      margin-top: 3.5rem;
-    }
-    .vincent-searchbar .form-label {
-      font-size: 0.95rem;
-    }
-    .vincent-searchbar .btn {
-      margin-top: 0.7rem;
-    }
-  }
-</style>
-<div class="vincent-searchbar shadow-lg">
+<link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
+
+<div class="vincent-searchbar">
+  <div class="search-header">
+    <h2 class="search-title">Find Your Dream Property</h2>
+    <p class="search-subtitle">Search by location, features, or price range</p>
+  </div>
+  
   <form action="{% url 'search' %}" method="get">
-    <div class="row g-4 align-items-end flex-nowrap" style="overflow-x:auto;">
-      <div class="col-md-3 col-12 form-group">
-        <label class="form-label" for="keywords">Keywords</label>
-        <span class="input-icon"><i class="fas fa-search"></i></span>
-        <input type="text" id="keywords" name="keywords" class="form-control" placeholder="e.g. Pool, Garage, Penthouse" value="{{ request.GET.keywords }}">
+    <div class="form-row">
+      <div class="form-col form-col-search">
+        <label class="form-label" for="keywords">
+          <i class="fas fa-search"></i> Keywords
+        </label>
+        <div class="form-group">
+          <input type="text" id="keywords" name="keywords" class="form-control" 
+                 placeholder="Pool, Garage, Penthouse, Garden..." 
+                 value="{{ request.GET.keywords }}">
+          <i class="fas fa-search input-icon"></i>
+        </div>
       </div>
-      <div class="col-md-3 col-12 form-group">
-        <label class="form-label" for="city">City/Town</label>
-        <span class="input-icon"><i class="fas fa-city"></i></span>
-        <input type="text" id="city" name="city" class="form-control" placeholder="e.g. Nairobi, Mombasa, London, New York" value="{{ request.GET.city }}">
+      
+      <div class="form-col">
+        <label class="form-label" for="city">
+          <i class="fas fa-map-marker-alt"></i> Location
+        </label>
+        <div class="form-group">
+          <input type="text" id="city" name="city" class="form-control" 
+                 placeholder="Nairobi, Mombasa, London..." 
+                 value="{{ request.GET.city }}">
+          <i class="fas fa-map-marker-alt input-icon"></i>
+        </div>
       </div>
-      <div class="col-md-2 col-6 form-group">
-        <label class="form-label" for="bedrooms">Bedrooms</label>
-        <span class="input-icon"><i class="fas fa-bed"></i></span>
-        <select id="bedrooms" name="bedrooms" class="form-select">
-          <option value="">Any</option>
-          {% for key, value in bedroom_choices.items %}
-          <option value="{{ key }}" {% if request.GET.bedrooms == key|stringformat:'s' %}selected{% endif %}>{{ value }}</option>
-          {% endfor %}
-        </select>
+      
+      <div class="form-col">
+        <label class="form-label" for="bedrooms">
+          <i class="fas fa-bed"></i> Bedrooms
+        </label>
+        <div class="form-group">
+          <select id="bedrooms" name="bedrooms" class="form-select">
+            <option value="">Any Bedrooms</option>
+            {% for key, value in bedroom_choices.items %}
+            <option value="{{ key }}" {% if request.GET.bedrooms == key|stringformat:'s' %}selected{% endif %}>
+              {{ value }}
+            </option>
+            {% endfor %}
+          </select>
+          <i class="fas fa-bed input-icon"></i>
+        </div>
       </div>
-      <div class="col-md-2 col-6 form-group">
-        <label class="form-label" for="price">Max Price</label>
-        <span class="input-icon"><i class="fas fa-money-bill-wave"></i></span>
-        <select id="price" name="price" class="form-select">
-          <option value="">Any</option>
-          {% for key, value in price_choices.items %}
-          <option value="{{ key }}" {% if request.GET.price == key|stringformat:'s' %}selected{% endif %}>Ksh {{ value }}</option>
-          {% endfor %}
-        </select>
+      
+      <div class="form-col form-col-price">
+        <label class="form-label" for="price">
+          <i class="fas fa-money-bill-wave"></i> Max Price
+        </label>
+        <div class="form-group">
+          <select id="price" name="price" class="form-select">
+            <option value="">Any Price</option>
+            {% for key, value in price_choices.items %}
+            <option value="{{ key }}" {% if request.GET.price == key|stringformat:'s' %}selected{% endif %}>
+              Ksh {{ value }}
+            </option>
+            {% endfor %}
+          </select>
+          <i class="fas fa-money-bill-wave input-icon"></i>
+        </div>
       </div>
-      <div class="col-md-2 col-12 d-grid align-items-end" style="min-width:140px;">
-        <button class="btn" type="submit">Search</button>
+      
+      <div class="form-col form-col-btn">
+        <label class="form-label">&nbsp;</label>
+        <button class="btn" type="submit">
+          <i class="fas fa-search"></i>
+          Search Properties
+        </button>
       </div>
     </div>
   </form>

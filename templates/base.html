@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <!-- Lightbox -->
   <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
+  <!-- WhatsApp Chatbot -->
+  <link rel="stylesheet" href="{% static 'css/whatsapp-chatbot.css' %}">
+  <!-- Footer -->
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+  <!-- Extra CSS -->
+  {% block extra_css %}{% endblock %}
 
   <title>Vincent Real Estate {% block title %}{% endblock %}</title>
 </head>
@@ -29,40 +35,206 @@
   {% include 'partials/_footer.html' %}
   
   <!-- WhatsApp Chatbot Widget Modern -->
-  <div class="whatsapp-chatbot-widget" id="whatsappChatbotWidget" style="position:fixed;bottom:32px;right:32px;z-index:3000;">
-    <button class="close-btn"
-            title="Close chat"
-            aria-label="Close WhatsApp chat"
-            style="position:absolute;top:12px;right:12px;z-index:9999;background:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 2px 8px rgba(32,134,107,0.10);border:none;opacity:0.85;cursor:pointer;"
-            onclick="document.getElementById('whatsappChatbotWidget').style.display='none';document.getElementById('whatsappChatbotBtnReopen').classList.add('show');">
-      &times;
-    </button>
+  <div class="whatsapp-chatbot-widget" id="whatsappChatbotWidget" role="complementary" aria-label="WhatsApp Chat Widget">
+    <div class="chatbot-controls">
+      <button class="minimize-btn"
+              title="Minimize chat"
+              aria-label="Minimize WhatsApp chat"
+              onclick="minimizeChatbot()">
+        <i class="fas fa-minus"></i>
+      </button>
+      <button class="close-btn"
+              title="Close chat"
+              aria-label="Close WhatsApp chat"
+              onclick="closeChatbot()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
     <div class="whatsapp-chatbot-widget-header">
-      <span style="display:flex;align-items:center;gap:0.4rem;">
-        <span class="online-dot"></span>
-        <span class="brand">Vincent RealEstate is online</span>
-        <i class="fab fa-whatsapp" style="color:#25d366;font-size:1.3rem;margin-left:0.5rem;"></i>
-      </span>
+      <div class="header-content">
+        <div class="status-indicator">
+          <span class="online-dot"></span>
+          <span class="brand">Vincent RealEstate</span>
+        </div>
+        <div class="whatsapp-icon">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+      </div>
+      <div class="status-text">Online now</div>
     </div>
     <div class="whatsapp-chatbot-widget-message">
-      👋 Hi there! Welcome to Vincent RealEstate Solutions.<br>
-      How can we help you today? Click below to chat with us on WhatsApp.
+      <div class="message-bubble">
+        <div class="message-avatar">
+          <img src="{% static 'img/logo.png' %}" alt="Vincent RealEstate" onerror="this.style.display='none'">
+        </div>
+        <div class="message-content">
+          <div class="message-text">
+            👋 Hi there! Welcome to Vincent RealEstate Solutions.
+          </div>
+          <div class="message-text">
+            How can we help you today? Click below to chat with us on WhatsApp.
+          </div>
+          <div class="message-time">Just now</div>
+        </div>
+      </div>
     </div>
-    <a href="https://wa.me/254797398004" target="_blank" class="whatsapp-chatbot-widget-btn">Chat on WhatsApp</a>
+    <div class="whatsapp-chatbot-actions">
+      <a href="https://wa.me/254797398004?text=Hi! I'm interested in your real estate services." target="_blank" rel="noopener" class="whatsapp-chatbot-widget-btn" aria-label="Start WhatsApp chat">
+        <i class="fab fa-whatsapp"></i>
+        <span>Start Chat</span>
+      </a>
+      <div class="quick-actions">
+        <button class="quick-action-btn" onclick="window.open('https://wa.me/254797398004?text=I want to buy a property', '_blank')">
+          <i class="fas fa-home"></i>
+          <span>Buy Property</span>
+        </button>
+        <button class="quick-action-btn" onclick="window.open('https://wa.me/254797398004?text=I want to rent a property', '_blank')">
+          <i class="fas fa-key"></i>
+          <span>Rent Property</span>
+        </button>
+      </div>
+    </div>
     <div class="whatsapp-chatbot-widget-tail">
       <svg width="38" height="18" viewBox="0 0 38 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 0C0 0 8 18 19 18C30 18 38 0 38 0H0Z" fill="white"/>
-        <path d="M0 0C0 0 8 18 19 18C30 18 38 0 38 0" stroke="#25d366" stroke-width="1.5"/>
+        <path d="M0 0C0 0 8 18 19 18C30 18 38 0 38 0" stroke="#30caa0" stroke-width="1.5"/>
       </svg>
     </div>
   </div>
-  <button class="whatsapp-chatbot-btn-reopen" id="whatsappChatbotBtnReopen" onclick="document.getElementById('whatsappChatbotWidget').style.display='flex';this.classList.remove('show');" title="Chat with us on WhatsApp" style="position:fixed;bottom:32px;right:32px;z-index:2000;display:none;">
+  
+  <button class="whatsapp-chatbot-btn-reopen" id="whatsappChatbotBtnReopen" onclick="reopenChatbot()" title="Chat with us on WhatsApp" aria-label="Reopen WhatsApp chat">
     <i class="fab fa-whatsapp"></i>
+    <span class="pulse-dot"></span>
   </button>
 
   <script src="{% static 'js/lightbox.min.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/footer.js' %}"></script>
   <script>
+    // WhatsApp widget toggle logic
+    document.addEventListener('DOMContentLoaded', function() {
+      var widget = document.getElementById('whatsappChatbotWidget');
+      var reopenBtn = document.getElementById('whatsappChatbotBtnReopen');
+      
+      if(widget && reopenBtn) {
+        // Hide reopen button initially
+        reopenBtn.classList.remove('show');
+        
+        // Add keyboard support
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && widget.style.display !== 'none') {
+            closeChatbot();
+          }
+        });
+      }
+    });
+
+    // Close chatbot function
+    function closeChatbot() {
+      const widget = document.getElementById('whatsappChatbotWidget');
+      const reopenBtn = document.getElementById('whatsappChatbotBtnReopen');
+      
+      if (widget && reopenBtn) {
+        // Add closing animation
+        widget.style.transform = 'scale(0.8)';
+        widget.style.opacity = '0';
+        
+        setTimeout(() => {
+          widget.style.display = 'none';
+          widget.style.transform = '';
+          widget.style.opacity = '';
+          reopenBtn.classList.add('show');
+          
+          // Show feedback message
+          showNotification('Chat closed. Click the WhatsApp button to reopen.');
+        }, 200);
+      }
+    }
+
+    // Minimize chatbot function
+    function minimizeChatbot() {
+      const widget = document.getElementById('whatsappChatbotWidget');
+      const reopenBtn = document.getElementById('whatsappChatbotBtnReopen');
+      
+      if (widget && reopenBtn) {
+        // Add minimizing animation
+        widget.style.transform = 'scale(0.8)';
+        widget.style.opacity = '0';
+        
+        setTimeout(() => {
+          widget.style.display = 'none';
+          widget.style.transform = '';
+          widget.style.opacity = '';
+          reopenBtn.classList.add('show');
+          
+          // Show feedback message
+          showNotification('Chat minimized. Click the WhatsApp button to reopen.');
+        }, 200);
+      }
+    }
+
+    // Reopen chatbot function
+    function reopenChatbot() {
+      const widget = document.getElementById('whatsappChatbotWidget');
+      const reopenBtn = document.getElementById('whatsappChatbotBtnReopen');
+      
+      if (widget && reopenBtn) {
+        reopenBtn.classList.remove('show');
+        widget.style.display = 'flex';
+        
+        // Add reopening animation
+        widget.style.transform = 'scale(0.8)';
+        widget.style.opacity = '0';
+        
+        setTimeout(() => {
+          widget.style.transform = 'scale(1)';
+          widget.style.opacity = '1';
+        }, 50);
+      }
+    }
+
+    // Show notification function
+    function showNotification(message) {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = 'chatbot-notification';
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        right: 32px;
+        background: #10284e;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 4000;
+        box-shadow: 0 4px 12px rgba(16, 40, 78, 0.2);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Animate in
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 100);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+
     const toggleBtn = document.getElementById('theme-toggle');
     toggleBtn?.addEventListener('click', () => {
       document.documentElement.classList.toggle('light-mode');
@@ -71,30 +243,6 @@
   <!-- Only include Bootstrap 5 bundle from CDN once, after all other scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <script>
-    // WhatsApp widget toggle logic
-    document.addEventListener('DOMContentLoaded', function() {
-      var widget = document.getElementById('whatsappChatbotWidget');
-      var reopenBtn = document.getElementById('whatsappChatbotBtnReopen');
-      if(widget && reopenBtn) {
-        // Hide reopen button initially
-        reopenBtn.classList.remove('show');
-        // If widget is closed, show reopen button
-        var closeBtn = widget.querySelector('.close-btn');
-        if(closeBtn) {
-          closeBtn.addEventListener('click', function() {
-            widget.style.display = 'none';
-            reopenBtn.classList.add('show');
-          });
-        }
-        // Reopen logic
-        reopenBtn.addEventListener('click', function() {
-          widget.style.display = 'flex';
-          reopenBtn.classList.remove('show');
-        });
-      }
-    });
-  </script>
 </body>
 
 </html>

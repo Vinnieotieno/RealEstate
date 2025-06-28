@@ -1,0 +1,266 @@
+:root {
+  --brand-blue: #10284e;
+  --brand-green: #30caa0;
+  --brand-green-light: #4dd4b0;
+  --brand-green-dark: #28b894;
+  --text-dark: #2c3e50;
+  --text-light: #7f8c8d;
+  --white: #ffffff;
+  --shadow: 0 8px 32px rgba(16, 40, 78, 0.12);
+  --shadow-hover: 0 16px 48px rgba(16, 40, 78, 0.18);
+  --gradient-primary: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-green) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+}
+
+/* Modern Premium Navbar */
+.vincent-navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 4px 24px rgba(16, 40, 78, 0.08);
+  border-bottom: 1px solid rgba(48, 202, 160, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.8rem 0;
+}
+
+.vincent-navbar.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 8px 32px rgba(16, 40, 78, 0.15);
+  border-bottom: 1px solid rgba(48, 202, 160, 0.15);
+}
+
+/* Brand Logo */
+.vincent-navbar .navbar-brand {
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: var(--brand-blue) !important;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.vincent-navbar .navbar-brand:hover {
+  transform: translateY(-1px);
+  color: var(--brand-blue) !important;
+}
+
+.vincent-navbar .navbar-brand img {
+  height: 42px;
+  width: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(48, 202, 160, 0.2));
+  transition: all 0.3s ease;
+}
+
+.vincent-navbar .navbar-brand:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 12px rgba(48, 202, 160, 0.3));
+}
+
+.vincent-navbar .navbar-brand .brand-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+
+/* Navigation Links */
+.vincent-navbar .nav-link {
+  color: var(--brand-blue) !important;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 0.3rem;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.7rem 1.2rem;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.vincent-navbar .nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-secondary);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: 12px;
+}
+
+.vincent-navbar .nav-link:hover::before,
+.vincent-navbar .nav-link.active::before {
+  left: 0;
+}
+
+.vincent-navbar .nav-link:hover,
+.vincent-navbar .nav-link.active {
+  color: var(--white) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(48, 202, 160, 0.25);
+}
+
+/* Special CTA Button */
+.vincent-navbar .nav-link.cta-btn {
+  background: var(--gradient-secondary);
+  color: var(--white) !important;
+  border-radius: 25px;
+  padding: 0.7rem 1.5rem;
+  margin-left: 0.5rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(48, 202, 160, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vincent-navbar .nav-link.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(48, 202, 160, 0.35);
+  background: linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 100%);
+}
+
+.vincent-navbar .nav-link.cta-btn::before {
+  display: none;
+}
+
+/* Mobile Toggle Button */
+.vincent-navbar .navbar-toggler {
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  border-radius: 12px;
+  background: rgba(48, 202, 160, 0.1);
+  transition: all 0.3s ease;
+}
+
+.vincent-navbar .navbar-toggler:hover {
+  background: rgba(48, 202, 160, 0.2);
+  transform: scale(1.05);
+}
+
+.vincent-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(48, 202, 160, 0.2);
+}
+
+.vincent-navbar .navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path stroke="%2310284e" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg>');
+  transition: all 0.3s ease;
+}
+
+/* Mobile Menu */
+@media (max-width: 991px) {
+  .vincent-navbar .navbar-collapse {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px) saturate(140%);
+    box-shadow: 0 8px 32px rgba(16, 40, 78, 0.15);
+    border-radius: 16px;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    top: 100%;
+    z-index: 1200;
+    border: 1px solid rgba(48, 202, 160, 0.1);
+  }
+
+  .vincent-navbar .nav-link {
+    margin: 0.5rem 0;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.05rem;
+    width: 100%;
+    text-align: left;
+    border-radius: 12px;
+  }
+
+  .vincent-navbar .nav-link.cta-btn {
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  .vincent-navbar .navbar-nav {
+    gap: 0.3rem;
+  }
+}
+
+/* Scroll Animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vincent-navbar .navbar-collapse.show {
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .vincent-navbar {
+    padding: 0.6rem 0;
+  }
+
+  .vincent-navbar .navbar-brand {
+    font-size: 1.4rem;
+  }
+
+  .vincent-navbar .navbar-brand img {
+    height: 36px;
+    width: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vincent-navbar .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .vincent-navbar .navbar-brand img {
+    height: 32px;
+    width: 32px;
+  }
+
+  .vincent-navbar .navbar-collapse {
+    left: 0.5rem;
+    right: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+/* Accessibility */
+.vincent-navbar .nav-link:focus {
+  outline: 2px solid var(--brand-green);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .vincent-navbar {
+    background: var(--white);
+    border-bottom: 2px solid var(--brand-blue);
+  }
+  
+  .vincent-navbar .nav-link {
+    border: 1px solid transparent;
+  }
+  
+  .vincent-navbar .nav-link:hover,
+  .vincent-navbar .nav-link.active {
+    border-color: var(--brand-green);
+  }
+}

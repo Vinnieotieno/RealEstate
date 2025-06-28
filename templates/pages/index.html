@@ -2,23 +2,273 @@
 {% load static %}
 {% load humanize %}
 
-{% block title %} | Welcome to Vincent RealEstate Solutions - Find Your Dream Home {% endblock %}
+{% block title %}Vincent RealEstate Solutions - Premium Real Estate in Kenya | Find Your Dream Home{% endblock %}
+
 {% block meta %}
-  <meta name="description" content="Find your next home, rental, or investment property with Vincent RealEstate Solutions. Trusted agents, verified listings, and a seamless experience across Kenya and worldwide.">
-  <meta property="og:title" content="Vincent RealEstate Solutions - Find Your Dream Home" />
-  <meta property="og:description" content="Discover premium real estate listings, rentals, and investment opportunities in Kenya and globally. Modern, sleek, and trusted." />
+  <meta name="description" content="Discover premium real estate in Kenya with Vincent RealEstate Solutions. Find luxury homes, apartments, commercial properties, and investment opportunities. Expert agents, verified listings, seamless experience.">
+  <meta name="keywords" content="real estate Kenya, luxury homes Nairobi, property investment Kenya, apartments for sale, commercial property Kenya, real estate agents Kenya">
+  <meta name="author" content="Vincent RealEstate Solutions">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yourdomain.com/" />
-  <meta property="og:image" content="https://yourdomain.com/static/img/showcase.avif" />
+  <meta property="og:url" content="https://vincentrealestate.com/" />
+  <meta property="og:title" content="Vincent RealEstate Solutions - Premium Real Estate in Kenya" />
+  <meta property="og:description" content="Discover premium real estate in Kenya. Find luxury homes, apartments, commercial properties, and investment opportunities with expert guidance." />
+  <meta property="og:image" content="{% static 'img/showcase.avif' %}" />
+  <meta property="og:site_name" content="Vincent RealEstate Solutions" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://vincentrealestate.com/" />
+  <meta property="twitter:title" content="Vincent RealEstate Solutions - Premium Real Estate in Kenya" />
+  <meta property="twitter:description" content="Discover premium real estate in Kenya. Find luxury homes, apartments, commercial properties, and investment opportunities." />
+  <meta property="twitter:image" content="{% static 'img/showcase.avif' %}" />
+  
+  <!-- Additional SEO -->
+  <link rel="canonical" href="https://vincentrealestate.com/" />
+  <meta name="geo.region" content="KE" />
+  <meta name="geo.placename" content="Nairobi, Kenya" />
+  <meta name="geo.position" content="-1.2921;36.8219" />
+  <meta name="ICBM" content="-1.2921, 36.8219" />
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
 {% block content %}
-  {% include 'partials/_hero.html' %}
-  {% include 'partials/_searchbar.html' %}
-  {% include 'partials/_alerts.html' %}
-  <section class="container" style="margin-top: 3.5rem;">
-    <h3 class="mb-5 text-center" style="font-family:'Poppins',sans-serif;font-weight:800;font-size:2.3rem;letter-spacing:-1px;">Latest Listings</h3>
-    {% include 'partials/_listings_grid.html' %}
-  </section>
-  {% include 'partials/_services.html' %}
+<!-- Premium Hero Section -->
+<section class="premium-hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i class="fas fa-star"></i>
+      <span>Kenya's Premier Real Estate Platform</span>
+    </div>
+    
+    <h1 class="hero-title">
+      Find Your Dream Home in
+      <span class="gradient-text">Kenya</span>
+    </h1>
+    
+    <p class="hero-subtitle">
+      Discover premium properties, luxury homes, and investment opportunities across Kenya. 
+      Expert guidance, verified listings, and seamless experience.
+    </p>
+    
+    <div class="hero-cta-group">
+      <a href="{% url 'listings' %}" class="hero-btn-primary">
+        <i class="fas fa-search"></i>
+        Browse Properties
+      </a>
+      <a href="{% url 'contact' %}" class="hero-btn-secondary">
+        <i class="fas fa-phone"></i>
+        Contact Us
+      </a>
+    </div>
+    
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-number">500+</span>
+        <span class="hero-stat-label">Properties</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">50+</span>
+        <span class="hero-stat-label">Expert Agents</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">1000+</span>
+        <span class="hero-stat-label">Happy Clients</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Premium Search Section -->
+<section class="premium-search">
+  <div class="search-container">
+    <div class="search-header">
+      <h2 class="search-title">Find Your Perfect Property</h2>
+      <p class="search-subtitle">Search through our extensive collection of verified properties across Kenya</p>
+    </div>
+    
+    <form class="search-form" method="GET" action="{% url 'search' %}">
+      <div class="search-group">
+        <label for="keywords">Keywords</label>
+        <input type="text" id="keywords" name="keywords" placeholder="Enter keywords...">
+      </div>
+      
+      <div class="search-group">
+        <label for="city">City</label>
+        <select id="city" name="city">
+          <option value="">All Cities</option>
+          <option value="Nairobi">Nairobi</option>
+          <option value="Mombasa">Mombasa</option>
+          <option value="Kisumu">Kisumu</option>
+          <option value="Nakuru">Nakuru</option>
+          <option value="Eldoret">Eldoret</option>
+        </select>
+      </div>
+      
+      <div class="search-group">
+        <label for="bedrooms">Bedrooms</label>
+        <select id="bedrooms" name="bedrooms">
+          <option value="">Any</option>
+          <option value="1">1+</option>
+          <option value="2">2+</option>
+          <option value="3">3+</option>
+          <option value="4">4+</option>
+        </select>
+      </div>
+      
+      <div class="search-group">
+        <label for="price">Max Price</label>
+        <select id="price" name="price">
+          <option value="">Any Price</option>
+          <option value="1000">Ksh 1,000</option>
+          <option value="5000">Ksh 5,000</option>
+          <option value="10000">Ksh 10,000</option>
+          <option value="25000">Ksh 25,000</option>
+          <option value="50000">Ksh 50,000</option>
+          <option value="100000">Ksh 100,000</option>
+          <option value="250000">Ksh 250,000</option>
+          <option value="500000">Ksh 500,000</option>
+          <option value="1000000">Ksh 1M</option>
+          <option value="2500000">Ksh 2.5M</option>
+          <option value="5000000">Ksh 5M</option>
+          <option value="10000000">Ksh 10M</option>
+          <option value="25000000">Ksh 25M</option>
+          <option value="50000000">Ksh 50M</option>
+          <option value="100000000">Ksh 100M</option>
+          <option value="250000000">Ksh 250M</option>
+          <option value="500000000">Ksh 500M</option>
+          <option value="1000000000">Ksh 1B+</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i>
+        Search Properties
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+<!-- Featured Listings Section -->
+<section class="featured-listings">
+  <div class="section-header">
+    <h2 class="section-title">Featured Properties</h2>
+    <p class="section-subtitle">Discover our handpicked selection of premium properties</p>
+  </div>
+  
+  <div class="listings-grid">
+    {% for listing in listings %}
+    <div class="listing-card">
+      <div class="listing-image">
+        <img src="{{ listing.photo_main.url }}" alt="{{ listing.title }}">
+        <div class="listing-price">Ksh {{ listing.price|intcomma }}</div>
+      </div>
+      
+      <div class="listing-content">
+        <h3 class="listing-title">{{ listing.title }}</h3>
+        <div class="listing-location">
+          <i class="fas fa-map-marker-alt"></i>
+          {{ listing.city }}, {{ listing.state }}
+        </div>
+        
+        <div class="listing-features">
+          <span class="listing-feature">
+            <i class="fas fa-bed"></i>
+            {{ listing.bedrooms }} Beds
+          </span>
+          <span class="listing-feature">
+            <i class="fas fa-bath"></i>
+            {{ listing.bathrooms }} Baths
+          </span>
+          <span class="listing-feature">
+            <i class="fas fa-th-large"></i>
+            {{ listing.sqft }} sqft
+          </span>
+        </div>
+        
+        <a href="{% url 'listing' listing.id %}" class="listing-btn">View Details</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+  <div class="section-header">
+    <h2 class="section-title">Why Choose Vincent RealEstate?</h2>
+    <p class="section-subtitle">We provide comprehensive real estate services with expertise and dedication</p>
+  </div>
+  
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">
+        <i class="fas fa-home"></i>
+      </div>
+      <h3 class="service-title">Property Sales</h3>
+      <p class="service-description">
+        Expert guidance through the entire sales process, from listing to closing. 
+        Get the best value for your property with our market expertise.
+      </p>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">
+        <i class="fas fa-key"></i>
+      </div>
+      <h3 class="service-title">Property Rentals</h3>
+      <p class="service-description">
+        Find your perfect rental property with our extensive database. 
+        From apartments to luxury homes, we have options for every budget.
+      </p>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <h3 class="service-title">Investment Advisory</h3>
+      <p class="service-description">
+        Make informed investment decisions with our expert market analysis 
+        and investment advisory services.
+      </p>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">
+        <i class="fas fa-handshake"></i>
+      </div>
+      <h3 class="service-title">Property Management</h3>
+      <p class="service-description">
+        Professional property management services to maximize your returns 
+        and minimize your stress.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="cta-content">
+    <h2 class="cta-title">Ready to Find Your Dream Property?</h2>
+    <p class="cta-description">
+      Join thousands of satisfied clients who found their perfect home with Vincent RealEstate Solutions. 
+      Start your journey today and experience the difference.
+    </p>
+    <a href="{% url 'listings' %}" class="cta-btn">
+      <i class="fas fa-search"></i>
+      Start Your Search
+    </a>
+  </div>
+</section>
 {% endblock %}

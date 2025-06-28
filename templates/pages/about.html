@@ -1,241 +1,701 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} | About Vincent RealEstate Solutions - Kenya's Trusted Real Estate Partner {% endblock %}
+{% block title %} | About Vincent RealEstate Solutions - Kenya's Premier Real Estate Partner {% endblock %}
+
 {% block meta %}
-  <meta name="description" content="Learn about Vincent RealEstate Solutions, our mission, vision, and team. Kenya's trusted real estate partner for buying, renting, and investing.">
-  <meta property="og:title" content="About Vincent RealEstate Solutions" />
-  <meta property="og:description" content="Meet the team and discover our mission at Vincent RealEstate Solutions. Modern, transparent, and customer-focused real estate in Kenya and beyond." />
+  <meta name="description" content="Discover Vincent RealEstate Solutions - Kenya's trusted real estate partner. Meet our expert team, learn about our mission, and find your dream property with confidence. Professional, transparent, and customer-focused real estate services in Kenya and beyond.">
+  <meta name="keywords" content="Vincent RealEstate Solutions, Kenya real estate, property agents, real estate Kenya, property investment, house for sale Kenya, apartments for rent, real estate services, trusted realtors">
+  <meta name="author" content="Vincent RealEstate Solutions">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="About Vincent RealEstate Solutions - Kenya's Premier Real Estate Partner" />
+  <meta property="og:description" content="Meet our expert team and discover our mission at Vincent RealEstate Solutions. Professional, transparent, and customer-focused real estate in Kenya and beyond." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yourdomain.com/about/" />
   <meta property="og:image" content="https://yourdomain.com/static/img/logo.png" />
+  <meta property="og:site_name" content="Vincent RealEstate Solutions">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Vincent RealEstate Solutions">
+  <meta name="twitter:description" content="Kenya's trusted real estate partner for buying, renting, and investing.">
+  <link rel="canonical" href="https://yourdomain.com/about/">
 {% endblock %}
 
 {% block content %}
 <style>
+  :root {
+    --brand-blue: #10284e;
+    --brand-green: #30caa0;
+    --brand-green-light: #4dd4b0;
+    --brand-green-dark: #28b894;
+    --text-dark: #2c3e50;
+    --text-light: #7f8c8d;
+    --bg-light: #f8f9fa;
+    --white: #ffffff;
+    --shadow: 0 8px 32px rgba(16, 40, 78, 0.12);
+    --shadow-hover: 0 16px 48px rgba(16, 40, 78, 0.18);
+  }
+
   .about-hero {
-    min-height: 45vh;
+    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-green) 100%);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('{% static "img/building.jpg" %}') center/cover;
+    opacity: 0.15;
+    z-index: 1;
+  }
+
+  .about-hero-content {
+    position: relative;
+    z-index: 2;
+    color: var(--white);
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .about-hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -2px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    line-height: 1.2;
+  }
+
+  .about-hero-subtitle {
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.95);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .about-hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .about-hero-stat {
+    text-align: center;
+  }
+
+  .about-hero-stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--brand-green-light);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-hero-stat-label {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .about-main-content {
+    padding: 5rem 0;
+    background: var(--bg-light);
+  }
+
+  .about-section {
+    margin-bottom: 5rem;
+  }
+
+  .about-section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    text-align: center;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+
+  .about-section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-mission-vision {
+    background: var(--white);
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    padding: 4rem 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .about-mvv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+  }
+
+  .about-mvv-card {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(48, 202, 160, 0.05) 0%, rgba(16, 40, 78, 0.05) 100%);
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-mvv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-green) 0%, var(--brand-blue) 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .about-mvv-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--brand-green);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .about-mvv-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .about-mvv-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    background: linear-gradient(120deg, #20866b 0%, #1fc8db 100%);
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    margin-bottom: 0;
+    margin: 0 auto 2rem;
+    color: var(--white);
+    font-size: 2rem;
+    box-shadow: 0 8px 24px rgba(48, 202, 160, 0.3);
   }
-  .about-hero-glass {
-    position: relative;
-    z-index: 2;
-    color: #fff;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 3.5rem 2rem 3rem 2rem;
-    border-radius: 40px;
-    background: rgba(255,255,255,0.13);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
-    backdrop-filter: blur(12px);
-  }
-  .about-hero-glass h1 {
-    font-size: 2.8rem;
+
+  .about-mvv-title {
+    font-size: 1.5rem;
     font-weight: 800;
-    letter-spacing: -1.5px;
-    margin-bottom: 1.2rem;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.18);
-  }
-  .about-hero-glass p {
-    font-size: 1.25rem;
-    color: #e4e4e4;
-    margin-bottom: 0;
-  }
-  .about-mvv-section {
-    background: #fff;
-    border-radius: 2.2rem;
-    box-shadow: 0 8px 40px rgba(32,134,107,0.10);
-    margin: 3rem auto 2.5rem auto;
-    padding: 2.5rem 2rem 2.2rem 2rem;
-    max-width: 1100px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2.5rem;
-    justify-content: space-between;
-  }
-  .about-mvv-card {
-    flex: 1 1 260px;
-    min-width: 220px;
-    background: rgba(32,134,107,0.06);
-    border-radius: 1.2rem;
-    padding: 2rem 1.2rem 1.5rem 1.2rem;
-    text-align: center;
-    box-shadow: 0 2px 12px rgba(32,134,107,0.06);
-    margin-bottom: 0.5rem;
-  }
-  .about-mvv-card i {
-    font-size: 2.5rem;
-    color: #20866b;
+    color: var(--brand-blue);
     margin-bottom: 1rem;
   }
-  .about-mvv-card h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.7rem;
-    color: #20866b;
+
+  .about-mvv-description {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    line-height: 1.7;
   }
-  .about-mvv-card p {
-    color: #444;
-    font-size: 1.05rem;
-  }
+
   .about-team-section {
-    background: #f8f9fa;
-    border-radius: 2.2rem;
-    box-shadow: 0 4px 24px rgba(32,134,107,0.08);
-    margin: 3rem auto 2.5rem auto;
-    padding: 2.5rem 2rem 2.2rem 2rem;
-    max-width: 1100px;
+    background: var(--white);
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    padding: 4rem 3rem;
+    margin-bottom: 4rem;
   }
-  .about-team-section h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    color: #20866b;
-  }
+
   .about-team-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2.5rem;
-    justify-content: center;
+    margin-top: 3rem;
   }
+
   .about-team-card {
-    background: #fff;
-    border-radius: 1.5rem;
-    box-shadow: 0 4px 24px rgba(32,134,107,0.10);
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 2.5rem 2rem;
     text-align: center;
-    padding: 2rem 1.2rem 1.5rem 1.2rem;
-    min-width: 220px;
-    max-width: 260px;
-    flex: 1 1 220px;
-    margin-bottom: 0.5rem;
-    transition: transform 0.18s, box-shadow 0.18s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
   }
+
+  .about-team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-green) 0%, var(--brand-blue) 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
   .about-team-card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 8px 32px rgba(32,134,107,0.18);
+    transform: translateY(-12px);
+    border-color: var(--brand-green);
+    box-shadow: var(--shadow-hover);
   }
-  .about-team-card img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 8px rgba(32,134,107,0.10);
+
+  .about-team-card:hover::before {
+    transform: scaleX(1);
   }
-  .about-team-card h4 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #20866b;
-    margin-bottom: 0.3rem;
-  }
-  .about-team-card p {
-    color: #555;
-    font-size: 0.98rem;
-    margin-bottom: 0.2rem;
-  }
-  .about-cta-section {
-    background: linear-gradient(90deg, #20866b 0%, #1fc8db 100%);
-    color: #fff;
-    border-radius: 2.2rem;
-    box-shadow: 0 8px 40px rgba(32,134,107,0.13);
-    margin: 3rem auto 2.5rem auto;
-    padding: 2.5rem 2rem 2.2rem 2rem;
-    max-width: 900px;
-    text-align: center;
-  }
-  .about-cta-section h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1.2rem;
-  }
-  .about-cta-section p {
-    font-size: 1.15rem;
+
+  .about-team-image-container {
+    position: relative;
     margin-bottom: 2rem;
   }
-  .about-cta-section .btn {
-    padding: 1rem 2.5rem;
-    border-radius: 2em;
+
+  .about-team-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--brand-green);
+    box-shadow: 0 8px 24px rgba(48, 202, 160, 0.2);
+    transition: all 0.4s ease;
+  }
+
+  .about-team-card:hover .about-team-image {
+    transform: scale(1.1);
+    border-color: var(--brand-blue);
+  }
+
+  .about-team-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
     font-weight: 700;
-    font-size: 1.15rem;
-    background: #fff;
-    color: #20866b;
-    border: none;
-    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(48, 202, 160, 0.3);
   }
-  .about-cta-section .btn:hover {
-    background: #20866b;
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(32,134,107,0.18);
+
+  .about-team-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    margin-bottom: 0.5rem;
   }
-  @media (max-width: 900px) {
-    .about-mvv-section, .about-team-section, .about-cta-section {
-      padding: 1.2rem 0.5rem 1.2rem 0.5rem;
-      max-width: 98vw;
+
+  .about-team-title {
+    color: var(--brand-green);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .about-team-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .about-team-contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .about-team-contact-item i {
+    color: var(--brand-green);
+    font-size: 1rem;
+    width: 16px;
+  }
+
+  .about-values-section {
+    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-green) 100%);
+    border-radius: 32px;
+    padding: 4rem 3rem;
+    margin-bottom: 4rem;
+    color: var(--white);
+    text-align: center;
+  }
+
+  .about-values-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+
+  .about-values-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 3rem;
+  }
+
+  .about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .about-value-item {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .about-value-item:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-4px);
+  }
+
+  .about-value-icon {
+    font-size: 2.5rem;
+    color: var(--brand-green-light);
+    margin-bottom: 1rem;
+  }
+
+  .about-value-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .about-value-description {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+  }
+
+  .about-cta-section {
+    background: var(--white);
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    padding: 4rem 3rem;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .about-cta-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-cta-description {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .about-cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .about-cta-btn {
+    padding: 1rem 2.5rem;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .about-cta-btn-primary {
+    background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+    color: var(--white);
+    box-shadow: 0 8px 24px rgba(48, 202, 160, 0.3);
+  }
+
+  .about-cta-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(48, 202, 160, 0.4);
+    color: var(--white);
+  }
+
+  .about-cta-btn-secondary {
+    background: var(--white);
+    color: var(--brand-blue);
+    border: 2px solid var(--brand-blue);
+  }
+
+  .about-cta-btn-secondary:hover {
+    background: var(--brand-blue);
+    color: var(--white);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 1200px) {
+    .about-hero-title {
+      font-size: 3rem;
     }
-    .about-hero-glass {
-      padding: 2rem 0.5rem 1.5rem 0.5rem;
+    
+    .about-hero-stats {
+      gap: 2rem;
+    }
+    
+    .about-hero-stat-number {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-hero {
+      min-height: 50vh;
+    }
+    
+    .about-hero-title {
+      font-size: 2.5rem;
+    }
+    
+    .about-hero-subtitle {
+      font-size: 1.2rem;
+    }
+    
+    .about-hero-stats {
+      gap: 1.5rem;
+    }
+    
+    .about-hero-stat-number {
+      font-size: 1.8rem;
+    }
+    
+    .about-main-content {
+      padding: 3rem 0;
+    }
+    
+    .about-section-title {
+      font-size: 2rem;
+    }
+    
+    .about-mission-vision,
+    .about-team-section,
+    .about-values-section,
+    .about-cta-section {
+      padding: 2rem 1.5rem;
+      border-radius: 24px;
+    }
+    
+    .about-mvv-grid,
+    .about-team-grid,
+    .about-values-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .about-cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .about-cta-btn {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-hero-title {
+      font-size: 2rem;
+    }
+    
+    .about-hero-subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .about-hero-content {
+      padding: 3rem 1rem;
+    }
+    
+    .about-hero-stats {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .about-section-title {
+      font-size: 1.8rem;
+    }
+    
+    .about-mission-vision,
+    .about-team-section,
+    .about-values-section,
+    .about-cta-section {
+      padding: 1.5rem 1rem;
+    }
+    
+    .about-team-image {
+      width: 100px;
+      height: 100px;
     }
   }
 </style>
+
+<!-- Hero Section -->
 <section class="about-hero">
-  <div class="about-hero-glass">
-    <h1>Who We Are at Vincent RealEstate Solutions</h1>
-    <p>We help Kenyans and global clients buy, rent, and invest with confidence. Our passion for people and places drives us to deliver personalized, transparent, and professional real estate solutions.</p>
-  </div>
-</section>
-
-<section class="about-mvv-section">
-  <div class="about-mvv-card">
-    <i class="fas fa-bullseye"></i>
-    <h3>Our Mission</h3>
-    <p>To empower individuals and families with trusted real estate solutions that match lifestyle, budget, and dreams.</p>
-  </div>
-  <div class="about-mvv-card">
-    <i class="fas fa-eye"></i>
-    <h3>Our Vision</h3>
-    <p>To be Kenya's most customer-centric real estate brand, known for service excellence and innovation.</p>
-  </div>
-  <div class="about-mvv-card">
-    <i class="fas fa-heart"></i>
-    <h3>Our Values</h3>
-    <p>Integrity, transparency, and a passion for helping you find your perfect place.</p>
-  </div>
-</section>
-
-<section class="about-team-section">
-  <h2>Meet Our Team</h2>
-  <div class="about-team-grid">
-    {% if realtors %}
-      {% for realtor in realtors %}
-      <div class="about-team-card">
-        <img src="{{ realtor.photo.url }}" alt="{{ realtor.name }}">
-        <h4>{{ realtor.name }}</h4>
-        <p class="mb-1 text-success"><i class="fas fa-award text-success me-1"></i> Realtor</p>
-        <hr style="width: 60px; margin: 0.5rem auto;">
-        <p><i class="fas fa-phone me-2"></i> {{ realtor.phone }}</p>
-        <p><i class="fas fa-envelope-open me-2"></i> {{ realtor.email }}</p>
+  <div class="about-hero-content">
+    <h1 class="about-hero-title">Who We Are at Vincent RealEstate Solutions</h1>
+    <p class="about-hero-subtitle">We help Kenyans and global clients buy, rent, and invest with confidence. Our passion for people and places drives us to deliver personalized, transparent, and professional real estate solutions.</p>
+    
+    <div class="about-hero-stats">
+      <div class="about-hero-stat">
+        <span class="about-hero-stat-number">500+</span>
+        <span class="about-hero-stat-label">Properties Sold</span>
       </div>
-      {% endfor %}
-    {% else %}
-      <div class="col-md-12">
-        <p>No Realtors Available</p>
+      <div class="about-hero-stat">
+        <span class="about-hero-stat-number">1000+</span>
+        <span class="about-hero-stat-label">Happy Clients</span>
       </div>
-    {% endif %}
+      <div class="about-hero-stat">
+        <span class="about-hero-stat-number">5+</span>
+        <span class="about-hero-stat-label">Years Experience</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="about-cta-section">
-  <h2>Ready to Make Your Move?</h2>
-  <p>Let Vincent RealEstate Solutions help you find your next home or investment property. Our agents are standing by.</p>
-  <a href="{% url 'listings' %}" class="btn">View Featured Listings</a>
+<!-- Main Content -->
+<section class="about-main-content">
+  <div class="container">
+    <!-- Mission, Vision, Values Section -->
+    <div class="about-section">
+      <h2 class="about-section-title">Our Mission, Vision & Values</h2>
+      <p class="about-section-subtitle">We're driven by a clear purpose and unwavering commitment to excellence in everything we do.</p>
+      
+      <div class="about-mission-vision">
+        <div class="about-mvv-grid">
+          <div class="about-mvv-card">
+            <div class="about-mvv-icon">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <h3 class="about-mvv-title">Our Mission</h3>
+            <p class="about-mvv-description">To empower individuals and families with trusted real estate solutions that match lifestyle, budget, and dreams. We believe everyone deserves a place they can call home.</p>
+          </div>
+          
+          <div class="about-mvv-card">
+            <div class="about-mvv-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <h3 class="about-mvv-title">Our Vision</h3>
+            <p class="about-mvv-description">To be Kenya's most customer-centric real estate brand, known for service excellence, innovation, and building lasting relationships with our clients.</p>
+          </div>
+          
+          <div class="about-mvv-card">
+            <div class="about-mvv-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3 class="about-mvv-title">Our Values</h3>
+            <p class="about-mvv-description">Integrity, transparency, and a passion for helping you find your perfect place. We put our clients first in everything we do.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="about-section">
+      <h2 class="about-section-title">Meet Our Expert Team</h2>
+      <p class="about-section-subtitle">Our dedicated professionals are here to guide you through every step of your real estate journey with expertise and care.</p>
+      
+      <div class="about-team-section">
+        <div class="about-team-grid">
+          {% if realtors %}
+            {% for realtor in realtors %}
+            <div class="about-team-card">
+              <div class="about-team-image-container">
+                <img src="{{ realtor.photo.url }}" alt="{{ realtor.name }} - Vincent RealEstate Solutions Realtor" class="about-team-image">
+                <div class="about-team-badge">Realtor</div>
+              </div>
+              <h4 class="about-team-name">{{ realtor.name }}</h4>
+              <p class="about-team-title">Professional Realtor</p>
+              <div class="about-team-contact">
+                <div class="about-team-contact-item">
+                  <i class="fas fa-phone"></i>
+                  <span>{{ realtor.phone }}</span>
+                </div>
+                <div class="about-team-contact-item">
+                  <i class="fas fa-envelope"></i>
+                  <span>{{ realtor.email }}</span>
+                </div>
+                {% if realtor.address %}
+                <div class="about-team-contact-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>{{ realtor.address }}</span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="col-md-12 text-center">
+              <p class="text-muted">Our team information will be available soon.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+
+           
+  
+
+    <!-- CTA Section -->
+    <div class="about-section">
+      <div class="about-cta-section">
+        <h2 class="about-cta-title">Ready to Find Your Dream Property?</h2>
+        <p class="about-cta-description">Let our expert team guide you through your real estate journey. Whether you're buying, selling, or investing, we're here to help you succeed.</p>
+        
+        <div class="about-cta-buttons">
+          <a href="{% url 'listings' %}" class="about-cta-btn about-cta-btn-primary">
+            <i class="fas fa-home"></i>
+            View Properties
+          </a>
+          <a href="{% url 'contact' %}" class="about-cta-btn about-cta-btn-secondary">
+            <i class="fas fa-envelope"></i>
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock %}
